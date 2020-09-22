@@ -13,6 +13,7 @@ import (
 	"github.com/smartcontractkit/chainlink/core/store"
 	"github.com/smartcontractkit/chainlink/core/store/models"
 	"github.com/smartcontractkit/chainlink/core/store/orm"
+	"github.com/smartcontractkit/chainlink/core/utils"
 
 	gethCommon "github.com/ethereum/go-ethereum/common"
 	"github.com/jinzhu/gorm"
@@ -162,7 +163,7 @@ func (eb *ethBroadcaster) monitorEthTxs() {
 }
 
 func (eb *ethBroadcaster) ProcessUnstartedEthTxs(key models.Key) error {
-	return withAdvisoryLock(eb.store, orm.AdvisoryLockClassID_EthBroadcaster, key.ID, func() error {
+	return withAdvisoryLock(eb.store, utils.AdvisoryLockClassID_EthBroadcaster, key.ID, func() error {
 		return eb.processUnstartedEthTxs(key.Address.Address())
 	})
 }
